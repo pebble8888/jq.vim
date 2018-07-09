@@ -1,7 +1,9 @@
-if executable('jq')
-  function! s:jq(...)
-    execute '%!jq' (a:0 == 0 ? '.' : a:1)
-  endfunction
-  command! -bar -nargs=? Jq  call s:jq(<f-args>)
-endif
-
+command! -nargs=? Jq call s:Jq(<f-args>)
+function! s:Jq(...)
+    if 0 == a:0 
+        let l:arg = "." 
+    else
+        let l:arg = a:1 
+    endif
+    execute "%! jq \"" . l:arg . "\""
+endfunction
